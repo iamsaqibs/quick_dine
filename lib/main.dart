@@ -16,7 +16,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(context,

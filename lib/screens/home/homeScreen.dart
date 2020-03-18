@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quick_dine/screens/discounts/discountsScreen.dart';
 import 'package:quick_dine/screens/my_orders/myOrdersScreen.dart';
 import 'package:quick_dine/screens/popular_deals/popularDealsScree.dart';
-import 'package:quick_dine/screens/qrcode/scanQRScreen.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,13 +14,21 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentPage = 1;
   int _currentTab = 1;
+  TextEditingController _outputController;
+  String _data = null;
   var _tabs = [MyOrdersScreen(), PopularDealsScreen(), DiscountsScreen()];
+
+  @override
+  void initState() {
+    super.initState();
+    this._outputController = new TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: _buildNavigationBar(),
+        bottomNavigationBar: _buildNavigationBar(context),
         body: _buildBody(),
       ),
     );
@@ -49,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNavigationBar() {
+  Widget _buildNavigationBar(BuildContext context) {
     return FancyBottomNavigation(
       barBackgroundColor: Color(0xffeccd35),
       initialSelection: _currentPage,
@@ -61,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
             iconData: FontAwesomeIcons.qrcode,
             title: 'Scan QR',
             onclick: () {
-              Navigator.pushNamed(context, '/scanQR');
+              _scanqr(context);
             }),
         TabData(iconData: FontAwesomeIcons.bell, title: 'Discounts')
       ],
@@ -72,5 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
     );
+  }
+
+  _scanqr(BuildContext context) async {
+    // final result = Navigator.pushNamed(context, '/scanQR');
+    // print('Homescreendata----$result');
+    String barcode = await scanner.scan();
+    if (barcode == null) {
+      print('nothing return.');
+    } else {
+      this._outputController.text = barcode;
+      setState(() {
+        _data = barcode;
+      });
+
+      print('QR Code -------> $_data');
+    }
   }
 }
