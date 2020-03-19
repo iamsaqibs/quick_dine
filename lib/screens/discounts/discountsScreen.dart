@@ -8,9 +8,7 @@ class DiscountsScreen extends StatefulWidget {
 class _DiscountsScreenState extends State<DiscountsScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Text('Discount Screen')
-    );
+    return Container();
   }
 
   

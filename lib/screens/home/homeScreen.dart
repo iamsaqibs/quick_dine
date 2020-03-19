@@ -16,6 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 1;
   TextEditingController _outputController;
   String _data = null;
+  var _title = [
+    'My Orders',
+    'Popular Deals',
+    'Discounts'
+  ];
   var _tabs = [MyOrdersScreen(), PopularDealsScreen(), DiscountsScreen()];
 
   @override
@@ -29,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: _buildNavigationBar(context),
-        body: _buildBody(),
+        body: _buildBody()
       ),
     );
   }
@@ -38,19 +43,26 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Icon(
                 FontAwesomeIcons.bars,
-              ),
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://wikibio.in/wp-content/uploads/2019/07/Hindustani-Bhau.jpg'),
+                size: 35.0,
               ),
             ],
           ),
+          SizedBox(height: 30.0,),
+          Text(
+            _title[_currentTab],
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 25.0
+            ),
+          ),
+          SizedBox(height: 20.0,),
+
           _tabs[_currentTab],
         ],
       ),
