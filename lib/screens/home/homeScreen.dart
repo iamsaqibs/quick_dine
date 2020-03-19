@@ -15,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentPage = 1;
   int _currentTab = 1;
   TextEditingController _outputController;
-  String _data = null;
   var _title = [
     'My Orders',
     'Popular Deals',
@@ -27,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     this._outputController = new TextEditingController();
+    if (this._outputController.text.isNotEmpty) {
+      print(this._outputController.text);
+    }
   }
 
   @override
@@ -34,12 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: _buildNavigationBar(context),
-        body: _buildBody()
+        body: Builder(builder: (context) => _buildBody(context))
       ),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0),
       child: Column(
@@ -62,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(height: 20.0,),
-
           _tabs[_currentTab],
         ],
       ),
@@ -95,18 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _scanqr(BuildContext context) async {
-    // final result = Navigator.pushNamed(context, '/scanQR');
-    // print('Homescreendata----$result');
     String barcode = await scanner.scan();
     if (barcode == null) {
       print('nothing return.');
     } else {
-      this._outputController.text = barcode;
       setState(() {
-        _data = barcode;
+        this._outputController.text = barcode;
       });
-
-      print('QR Code -------> $_data');
     }
   }
 }
