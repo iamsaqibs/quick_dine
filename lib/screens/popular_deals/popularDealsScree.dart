@@ -24,7 +24,7 @@ class PopularDealsScreen extends StatelessWidget {
         child: Card(
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 3.0,
+            elevation: 5.0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
