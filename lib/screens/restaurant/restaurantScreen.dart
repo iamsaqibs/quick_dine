@@ -13,7 +13,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: _buidBottomNavigation(),
-        body: _buildBody(),
+        body: Builder(
+          builder: (BuildContext context) => _buildBody(context),
+        ),
         floatingActionButton: FloatingActionButton(
           elevation: 0,
           backgroundColor: Constants().primaryColor,
@@ -30,7 +32,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Padding(
       padding: Constants().topBarPadding,
       child: Column(
@@ -93,6 +95,47 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                   child: FlatButton(
                     onPressed: () {
                       print('Our Menu Pressed');
+                      showDialog(
+                        context: context,
+                        child: Dialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Container(
+                            height: 500,
+                            child: ListView(
+                              padding: EdgeInsets.only(top: 20.0),
+                              children: <Widget>[
+                                Text(
+                                  'Menu',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 25.0,
+                                  ),
+                                ),
+                                ..._listCategories(),
+                                SizedBox(
+                                  height: 50.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 70.0, right: 70.0),
+                                  child: Container(
+                                    height: 50.0,
+                                    width: 50.0,
+                                    color: Constants().primaryColor,
+                                    child: FlatButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Close'),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                     },
                     child: Text(
                       'Our Menu',
@@ -122,14 +165,15 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                     fontSize: 20.0,
                   ),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 Card(
                   child: Column(children: <Widget>[
                     ListTile(
                       leading: Image.network(
-                          'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
-                          
-                          ),
+                        'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+                      ),
                       title: Text('Friday Smoke Bucket'),
                       subtitle: Text(
                           'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
@@ -146,9 +190,13 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                           '4.5',
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(width: 20.0,),
+                        SizedBox(
+                          width: 20.0,
+                        ),
                         Text('99'),
-                        SizedBox(width: 20.0,),
+                        SizedBox(
+                          width: 20.0,
+                        ),
                         Container(
                           color: Constants().primaryColor,
                           child: FlatButton(
@@ -157,7 +205,8 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                             },
                             child: Text(
                               'Add to Cart',
-                              style: TextStyle(color: Constants().secondaryColor),
+                              style:
+                                  TextStyle(color: Constants().secondaryColor),
                             ),
                           ),
                         )
@@ -193,5 +242,70 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget> _listCategories() {
+    return [
+      FlatButton(
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
+        onPressed: () {},
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Chicken',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      FlatButton(
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
+        onPressed: () {},
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Chicken',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      FlatButton(
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
+        onPressed: () {},
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Chicken',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      FlatButton(
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
+        onPressed: () {},
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Chicken',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      FlatButton(
+        padding: EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
+        onPressed: () {},
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Chicken',
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    ];
   }
 }
