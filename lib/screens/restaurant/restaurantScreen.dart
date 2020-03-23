@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quick_dine/constants/constants.dart';
+import 'package:quick_dine/models/orderItem.dart';
 import 'package:quick_dine/widgets/expension_tiiles/entry.dart';
 import 'package:quick_dine/widgets/expension_tiiles/entryItem.dart';
 
@@ -10,105 +11,101 @@ class RestaurantScreen extends StatefulWidget {
 }
 
 class _RestaurantScreenState extends State<RestaurantScreen> {
-
-  final Entry data = Entry(
-      'Chicken',
-      <Widget>[
-        Card(
-          child: Column(children: <Widget>[
-            ListTile(
-              leading: Image.network(
-                'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
-              ),
-              title: Text('Friday Smoke Bucket'),
-
-              subtitle: Text(
-                  'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
-            ),
-            ButtonBar(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.solidStar,
-                  color: Constants().primaryColor,
-                  size: 13.0,
-                ),
-                Text(
-                  '4.5',
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text('99'),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Container(
-                  color: Constants().primaryColor,
-                  child: FlatButton(
-                    onPressed: () {
-                      print('Add to Cart Button Pressed');
-                    },
-                    child: Text(
-                      'Add to Cart',
-                      style: TextStyle(color: Constants().secondaryColor),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ]),
+  List<OrderItem> _cart = [];
+  int _totalItems = 0;
+  double _totalPrice = 0;
+  final Entry data = Entry('Chicken', <Widget>[
+    Card(
+      child: Column(children: <Widget>[
+        ListTile(
+          leading: Image.network(
+            'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+          ),
+          title: Text('Friday Smoke Bucket'),
+          subtitle: Text(
+              'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
         ),
-        Card(
-          child: Column(children: <Widget>[
-            ListTile(
-              leading: Image.network(
-                'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+        ButtonBar(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Icon(
+              FontAwesomeIcons.solidStar,
+              color: Constants().primaryColor,
+              size: 13.0,
+            ),
+            Text(
+              '4.5',
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            Text('99'),
+            SizedBox(
+              width: 20.0,
+            ),
+            Container(
+              color: Constants().primaryColor,
+              child: FlatButton(
+                onPressed: () {
+                  print('Add to Cart Button Pressed');
+                },
+                child: Text(
+                  'Add to Cart',
+                  style: TextStyle(color: Constants().secondaryColor),
+                ),
               ),
-              title: Text('Friday Smoke Bucket'),
-
-              subtitle: Text(
-                  'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
-            ),
-            ButtonBar(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Icon(
-                  FontAwesomeIcons.solidStar,
-                  color: Constants().primaryColor,
-                  size: 13.0,
-                ),
-                Text(
-                  '4.5',
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Text('99'),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Container(
-                  color: Constants().primaryColor,
-                  child: FlatButton(
-                    onPressed: () {
-                      print('Add to Cart Button Pressed');
-                    },
-                    child: Text(
-                      'Add to Cart',
-                      style: TextStyle(color: Constants().secondaryColor),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ]),
+            )
+          ],
         ),
-      ]
-  );
-
+      ]),
+    ),
+    Card(
+      child: Column(children: <Widget>[
+        ListTile(
+          leading: Image.network(
+            'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+          ),
+          title: Text('Friday Smoke Bucket'),
+          subtitle: Text(
+              'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
+        ),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Icon(
+              FontAwesomeIcons.solidStar,
+              color: Constants().primaryColor,
+              size: 13.0,
+            ),
+            Text(
+              '4.5',
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            Text('99'),
+            SizedBox(
+              width: 20.0,
+            ),
+            Container(
+              color: Constants().primaryColor,
+              child: FlatButton(
+                onPressed: () {
+                  print('Add to Cart Button Pressed');
+                },
+                child: Text(
+                  'Add to Cart',
+                  style: TextStyle(color: Constants().secondaryColor),
+                ),
+              ),
+            )
+          ],
+        ),
+      ]),
+    ),
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -181,14 +178,14 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           SizedBox(
             height: 20.0,
           ),
+          Image.network(
+            'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/1200px-KFC_logo.svg.png',
+            height: 50.0,
+            width: 50.0,
+          ),
           Expanded(
             child: ListView(
               children: <Widget>[
-                Image.network(
-                  'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/1200px-KFC_logo.svg.png',
-                  height: 50.0,
-                  width: 50.0,
-                ),
                 SizedBox(
                   height: 20.0,
                 ),
@@ -293,9 +290,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
                   style: TextStyle(
                     fontSize: 20.0,
                   ),
-
                 ),
-
                 EntryItem(data),
               ],
             ),
@@ -316,9 +311,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Two Items Added To Cart'),
+                Text('$_totalItems Items Added To Cart'),
                 Text(
-                  'Total 100',
+                  'Total \$$_totalPrice',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                 )
               ]),
@@ -328,16 +323,20 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
   }
 
   Card _buildFoodItemCard() {
+    String _url =
+        'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs';
+    String _title = 'Friday Smoke Bucket';
+    String _subTitle =
+        'The perfect smokey break. 5 pieces of smokey chicken wings on friday';
+    double _price = 99;
     return Card(
       child: Column(children: <Widget>[
         ListTile(
           leading: Image.network(
-            'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+            _url,
           ),
-          title: Text('Friday Smoke Bucket'),
-
-          subtitle: Text(
-              'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
+          title: Text(_title),
+          subtitle: Text(_subTitle),
         ),
         ButtonBar(
           mainAxisSize: MainAxisSize.max,
@@ -354,7 +353,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
             SizedBox(
               width: 20.0,
             ),
-            Text('99'),
+            Text('$_price'),
             SizedBox(
               width: 20.0,
             ),
@@ -363,6 +362,14 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               child: FlatButton(
                 onPressed: () {
                   print('Add to Cart Button Pressed');
+                  setState(() {
+                    _totalPrice = 0;
+                    _cart.add(new OrderItem(_url, _title, _subTitle, _price));
+                    _totalItems = _cart.length;
+                    _cart.forEach((item){
+                      _totalPrice = _totalPrice + item.price;
+                    });
+                  });
                 },
                 child: Text(
                   'Add to Cart',

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:quick_dine/screens/home/homeScreen.dart';
 import 'package:quick_dine/screens/qrcode/scanQRScreen.dart';
 import 'package:quick_dine/screens/restaurant/restaurantScreen.dart';
-void main() => runApp(MaterialApp(
-      home: MyApp(),
-      routes: {
-        '/scanQR': (BuildContext context) => ScanQRCodeScreen(),
-        '/restaurant': (BuildContext context) => RestaurantScreen(),
-      },
-    ));
+void main(){
+  runApp(MaterialApp(
+    home: MyApp(),
+    routes: {
+      '/scanQR': (BuildContext context) => ScanQRCodeScreen(),
+      '/restaurant': (BuildContext context) => RestaurantScreen(),
+    },
+  ));
+}
 
 class MyApp extends StatefulWidget {
   @override
