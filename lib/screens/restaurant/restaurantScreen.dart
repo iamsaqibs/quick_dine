@@ -124,6 +124,9 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
           ),
           onPressed: () {
             print('FAB Pressed');
+            showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) => _showShoppingCart());
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -362,14 +365,7 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
               child: FlatButton(
                 onPressed: () {
                   print('Add to Cart Button Pressed');
-                  setState(() {
-                    _totalPrice = 0;
-                    _cart.add(new OrderItem(_url, _title, _subTitle, _price));
-                    _totalItems = _cart.length;
-                    _cart.forEach((item){
-                      _totalPrice = _totalPrice + item.price;
-                    });
-                  });
+                  _updateCart(_url, _title, _subTitle, _price);
                 },
                 child: Text(
                   'Add to Cart',
@@ -446,5 +442,112 @@ class _RestaurantScreenState extends State<RestaurantScreen> {
         ),
       ),
     ];
+  }
+
+  _buildShoppingCartItem(){
+    return Card(
+      child: Column(children: <Widget>[
+        ListTile(
+          leading: Image.network(
+            'https://cdn-images-fishry.azureedge.net/product/Value-Bucket-f8d68d7-kfc.png/xs',
+          ),
+          title: Text('Friday Smoke Bucket'),
+          subtitle: Text(
+              'The perfect smokey break. 5 pieces of smokey chicken wings on friday'),
+        ),
+        ButtonBar(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Icon(
+              FontAwesomeIcons.solidStar,
+              color: Constants().primaryColor,
+              size: 13.0,
+            ),
+            Text(
+              '4.5',
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            Text('99'),
+            SizedBox(
+              width: 20.0,
+            ),
+            Container(
+              height: 30.0,
+              width: 30.0,
+              color: Constants().primaryColor,
+              child: FlatButton(
+                onPressed: () {
+                  print('- button pressed');
+                },
+                child: Text(
+                  '-',
+                  style: TextStyle(color: Constants().secondaryColor),
+                ),
+              ),
+            ),
+            Text('9'),
+            Container(
+              height: 30.0,
+              width: 30.0,
+              color: Constants().primaryColor,
+              child: FlatButton(
+                onPressed: () {
+                  print('+ button pressed');
+                },
+                child: Text(
+                  '+',
+                  style: TextStyle(color: Constants().secondaryColor),
+                ),
+              ),
+            )
+          ],
+        ),
+      ]),
+    );
+
+  }
+
+  _showShoppingCart(){
+    return Container(
+      color: Color(0xff757575),
+      child: Container(
+//        color: Colors.white,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 5.0),
+          child: ListView.builder(
+            itemCount: _cart.length,
+            itemBuilder: (BuildContext context, int index){
+              return _buildShoppingCartItem();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  _updateCart(String url, String title, String subTitle, double price) {
+    setState(() {
+      bool flag = false;
+      OrderItem newItem = new OrderItem(1, url, title, subTitle, price, 1);
+      _totalPrice = 0;
+      _totalItems = _cart.length;
+      _cart.forEach((item) {
+        if (item.id == newItem.id) {
+          item.quantity = item.quantity + newItem.quantity;
+          _totalPrice = _totalPrice + item.price * item.quantity;
+          flag = true;
+        }
+      });
+      if (!flag) {
+        _cart.add(newItem);
+      }
+    });
   }
 }
